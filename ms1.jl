@@ -9,17 +9,36 @@ function get_interstep_distances(step_positions::Vector{Float64})
     return step_distances
 end
 
-function find_bunches(step_distances::Vector{Float64}, bunch_def: Float64)
+function find_bunches(step_distances::Vector{Float64}, bunch_def::Float64)
+    bunch_h = 0.0
+    bunch_w = 0.0
+    terrace_w = 0.0
+    terrace_num = 0
 
+    for distance in step_distances
+        if distance <= bunch_def # if true we are in a bunch
+            bunch_h += 1.0
+            bunch_w += distance
+        else # otherwise we are on a terrace
+            terrace_w = terrace_w + distance
+            terrace_num += 1
+        end
+    end
+    avg_terrace_w = terrace_w / terrace_num
+    
+    return avg_terrace_w
+end
+function count_terraces(step_distances::Vector{Float64}, bunch_def::Float64)
+    num_terraces = step_distances[1] > bunch_def ? 1 : 0
+    # continue ...
 end
 
 function ms1(step_positions::Vector{Float64})
     step_distances = get_interstep_distances(step_positions)
-
 end
 
 function main()
-    a = [1., 2., 3., 4.,5., 6., 7., 8., 9.]
+    a = [1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0]
     println(get_interstep_distances(a))
 end
 
