@@ -25,9 +25,10 @@ function find_bunches(step_distances::Vector{Float64}, bunch_def::Float64)
         end
     end
     avg_terrace_w = terrace_w / terrace_num
-    
+
     return avg_terrace_w
 end
+
 function count_terraces(step_distances::Vector{Float64}, bunch_def::Float64)
     num_terraces = step_distances[1] > bunch_def ? 1 : 0
     # continue ...
@@ -42,4 +43,7 @@ function main()
     println(get_interstep_distances(a))
 end
 
-main()
+
+if abspath(PROGRAM_FILE) == @__FILE__
+    main()
+end
